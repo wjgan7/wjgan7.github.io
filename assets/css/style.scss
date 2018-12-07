@@ -2,3 +2,20 @@
 ---
 
 @import "{{ site.theme }}";
+
+* {
+  font-family : 'Roboto'
+}
+
+#wjgan-wrapper {
+  width: 1000px
+}
+
+#wjgan-profile {
+  // min-width: 1
+  // width : 20%
+}
+
+#wjgan-content {
+  width : 80%
+}
