@@ -1,3 +1,8 @@
+---
+layout: main
+title: William Gan
+---
+
 # About
 
 * I'm Will, a third year CS / Applied Math Major at UC Berkeley.
@@ -10,4 +15,5 @@
 * [Github](https://github.com/wjgan7)
 * wjgan@berkeley.edu
 
-[comment]: # Things Related to EECS 126
+# Things Related to EECS 126
+* [LaTeX Reference for EE/CS Classes](/latex.html)
