@@ -1,6 +1,7 @@
 theme: jekyll-theme-minimal
 plugins:
   - jekyll-toc
+  - jekyll-seo-tag
 toc:
   min_level: 2
   max_level: 4
