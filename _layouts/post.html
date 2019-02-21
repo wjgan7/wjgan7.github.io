@@ -1,0 +1,18 @@
+---
+layout: default
+---
+
+<!-- <script src="assets/js/resize.js"></script> -->
+
+<div id="container" class="container">
+  <!-- <script>
+    addShrinkListener(document.getElementById("container"))
+  </script> -->
+  <div class="sidebar">
+  <h3> <a href="/index.html">Home</a> </h3>
+  {{ content | inject_anchors | toc_only }}
+  </div>
+  <div class="content">
+  {{ content }}
+  </div>
+</div>

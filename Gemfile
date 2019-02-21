@@ -1,4 +1,10 @@
 source 'https://rubygems.org'
-gem 'github-pages', group: :jekyll_plugins
-gem 'jekyll-toc', group: :jekyll_plugins
-gem 'jekyll-seo-tag', group: :jekyll_plugins
+
+# Github Pages Default
+gem 'github-pages'
+
+# For the sidebar on my articles
+gem 'jekyll-toc'
+
+# SEO tag in <head> of HTML
+gem 'jekyll-seo-tag'

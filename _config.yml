@@ -1,7 +1,15 @@
-theme: jekyll-theme-minimal
 plugins:
   - jekyll-toc
   - jekyll-seo-tag
+
+# Jekyll TOC
 toc:
   min_level: 2
   max_level: 4
+
+# Jekyll Seo Tag
+url: https://wjgan.com
+social:
+  links:
+    - https://linkedin.com/in/wjgan
+    - https://github.com/wjgan7
