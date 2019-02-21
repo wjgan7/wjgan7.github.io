@@ -1,3 +1,5 @@
+destination: /Users/wjgan/Documents/wjgan7.github.io/docs
+
 plugins:
   - jekyll-toc
   - jekyll-seo-tag
