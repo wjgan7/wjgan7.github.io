@@ -19,10 +19,6 @@ code, pre { font-family: Monaco, Bitstream Vera Sans Mono, Lucida Console, Termi
 
 pre { padding: 8px 15px; background: #f8f8f8; border-radius: 5px; border: 1px solid #e5e5e5; overflow-x: auto; }
 
-table { width: 100%; border-collapse: collapse; }
-
-th, td { text-align: left; padding: 5px 10px; border-bottom: 1px solid #e5e5e5; }
-
 dt { color: #444; font-weight: 700; }
 
 th { color: #444; }
@@ -36,6 +32,9 @@ body {
   font-size: 12pt;
   color: #24292e;
   padding: 30px;
+}
+
+.body-center {
   display: -webkit-box;
   -webkit-box-pack: center;
   -webkit-box-align: center;
