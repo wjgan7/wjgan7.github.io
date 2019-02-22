@@ -81,3 +81,15 @@ h3 {
   body {
     padding: 0px;
   }
+}
+
+/* Avatar Picture */
+
+.avatar {
+  vertical-align: middle;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+}
