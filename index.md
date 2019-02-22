@@ -17,4 +17,10 @@ title: William Gan
 
 ### Posts
 
-* [LaTeX Reference for Probability](/latex.html)
+* [LaTeX Reference for Probability](/posts/latex.html)
+
+### CS 184
+
+Here's my documentation for my CS 184 projects.
+
+* [p1-rasterizer](/cs184/p1-rasterizer.html)
