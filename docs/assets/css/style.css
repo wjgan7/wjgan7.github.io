@@ -91,3 +91,16 @@ h3 {
   height: 170px;
   border-radius: 50%;
 }
+
+.clip-button {
+  position: absolute;
+  top: 4px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.clip-button:hover {
+  fill: #888;
+}
