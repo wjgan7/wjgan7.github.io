@@ -99,6 +99,8 @@ h3 {
   width: 24px;
   height: 24px;
   cursor: pointer;
+  border-width: 0px;
+  padding: 0px;
 }
 
 .clip-button:hover {
