@@ -14,8 +14,9 @@ title: William Gan
 * [Resume](/assets/resume.pdf)
 * [LinkedIn](https://linkedin.com/in/wjgan)
 * [Github](https://github.com/wjgan7)
-* wjgan@berkeley.edu
+* Feel free to contact me at wjgan@berkeley.edu!
 
-### Posts
+### Stuff Related to 126
 
 * [LaTeX Reference for Probability](/posts/latex.html)
+* [Computing Probabilities and Expectations](/posts/computing.html)

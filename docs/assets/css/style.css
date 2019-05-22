@@ -92,6 +92,8 @@ h3 {
   border-radius: 50%;
 }
 
+/* For copy to clipboard button */
+
 .clip-button {
   position: absolute;
   top: 6px;
@@ -105,4 +107,9 @@ h3 {
 
 .clip-button:hover {
   fill: #888;
+}
+
+/* Hack to fix block math in collapsible section */
+details span.mjx-chtml.MJXc-display {
+  display: inline-block;
 }

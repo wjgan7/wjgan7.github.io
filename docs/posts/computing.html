@@ -1,0 +1,192 @@
+<!-- Contains meta things e.g. fonts, CSS, Google Analytics, SEO -->
+
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Computation</title>
+
+    <!-- The Roboto font used by all pages. -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- For code highlighting -->
+    <link rel="stylesheet" href="/assets/css/code.css">
+
+    <!-- MathJax -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131264326-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-131264326-1');
+    </script>
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Computation</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="Computation" />
+<meta property="og:locale" content="en_US" />
+<link rel="canonical" href="https://wjgan.com/posts/computing.html" />
+<meta property="og:url" content="https://wjgan.com/posts/computing.html" />
+<script type="application/ld+json">
+{"url":"https://wjgan.com/posts/computing.html","headline":"Computation","@type":"WebPage","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+  <body>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+
+<div class="body-center">
+  <div class="container">
+    <!-- <script>
+      addShrinkListener(document.getElementById("container"))
+    </script> -->
+    <div class="sidebar">
+    <h3> <a href="/index.html">Home</a> </h3>
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#motivation">
+Motivation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#fall-2015-1e">
+Fall 2015 1(e)</a></li>
+<li class="toc-entry toc-h3"><a href="#shuffled-deck-problem">
+Shuffled Deck Problem</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#tips-and-tricks">
+Tips and Tricks</a></li>
+</ul>
+    </div>
+    <div class="content">
+    <h1 id="computing-probabilities-and-expectations">Computing Probabilities and Expectations</h1>
+
+<p>Coding is pretty underrated when it comes to a subject like probability. EECS 126 is so focused on the math that the importance of, e.g. being able to simulate a random process, is often lost.</p>
+
+<h2 id="motivation">Motivation</h2>
+
+<h3 id="fall-2015-1e">Fall 2015 1(e)</h3>
+
+<p>Code is illuminating because it can verify answers. For example, here’s the question and solution for <a href="/assets/computing/fa15_sol.pdf">1(e) on Midterm 1 of Fall 2015</a>.</p>
+
+<div align="middle">
+  <img src="/assets/computing/q1e.png" align="middle" width="680px" height="321px" />
+</div>
+
+<p>The answer is intuitive – it invokes “symmetry” – but if we run this code segment which simulates the random process</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">trials</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">500000</span><span class="p">):</span>
+    <span class="n">rolls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="n">max_roll</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">max</span><span class="p">(</span><span class="n">rolls</span><span class="p">)</span>
+    <span class="n">trials</span><span class="p">[</span><span class="n">max_roll</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rolls</span><span class="p">))</span>
+
+<span class="n">Y</span> <span class="o">=</span> <span class="mi">99</span>
+<span class="n">expected</span> <span class="o">=</span> <span class="mf">0.51</span><span class="o">*</span><span class="n">Y</span>
+<span class="n">actual</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">trials</span><span class="p">[</span><span class="n">Y</span><span class="p">])</span>
+<span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">trials</span><span class="p">[</span><span class="n">Y</span><span class="p">])</span><span class="o">/</span><span class="n">samples</span><span class="o">**</span><span class="mf">0.5</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">'Y={Y} samples={samples}</span><span class="se">\n</span><span class="s">'</span> <span class="o">+</span>
+      <span class="n">f</span><span class="s">'expected:{expected : .3f} actual {actual : .6f}</span><span class="se">\n</span><span class="s">'</span><span class="o">+</span>
+      <span class="n">f</span><span class="s">'std: {std :.6f} error: {abs(expected-actual)/std: 0.6f} standard deviations</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div>
+  <img src="/assets/computing/output.png" width="649px" height="77px" />
+</div>
+
+<p>our expected answer based on the formula <script type="math/tex">\frac{51}{100}Y</script> and the actual empirical <script type="math/tex">E[Z \mid Y]</script> don’t match up. Even though they only differ by a slight amount (50.49 vs 50.27), that’s 24 standard deviations given the fact we had 197588 samples. And since the CLT tells us that our empirical <script type="math/tex">E[Z \mid Y]</script> will be normally distributed around its true value, 24 standard deviations away basically happens with 0 probability.</p>
+
+<p>The issue ends up being very subtle, but it relates to the fact that <script type="math/tex">\sum_{i \not = j} E[X_i \mid Y]</script> doesn’t make sense since <script type="math/tex">j</script> is random. The correct answer ends up being</p>
+
+<script type="math/tex; mode=display">E[Z \mid Y] = \frac{\frac{Y(Y-1)}{2} ((Y+1)^{49} - Y^{49}) + Y(Y+1)^{49}}{(Y+1)^{50} - Y^{50}}</script>
+
+<p>A derivation of that is in this <a href="/assets/computing/fa15mt1q1e.ipynb">Jupyter Notebook</a>, which also has the full code.</p>
+
+<h3 id="shuffled-deck-problem">Shuffled Deck Problem</h3>
+
+<p>Code can also guide us to answers. Consider this problem that we were considering putting on the Spring 2019 Final:</p>
+
+<blockquote>
+  <p>You have a randomly shuffled deck of cards labeled 1 to N. You keep drawing cards from the top of the deck while the numbers increase. What is expected sum of this increasing run?</p>
+</blockquote>
+
+<p>The answer to this question is elegant, but it turns out finding it mostly involves algebraic bashing with factorials. In fact, it would probably be very hard to get a derivation for the answer without knowing it in the first place. This is where code comes in.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="n">tup</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">tup</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">tup</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">tup</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">tup</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">s</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">for</span> <span class="n">N</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">permutation</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)):</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">score</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">s</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div>
+  <img src="/assets/computing/shuffled_deck_output.png" width="469px" height="177px" />
+</div>
+
+<p>The answer gets increasingly close to <script type="math/tex">N+1</script> as <script type="math/tex">N</script> gets larger. We can see that it is off by <script type="math/tex">\frac{1}{2}</script> for <script type="math/tex">N=2</script> and <script type="math/tex">\frac{1}{6}</script> for <script type="math/tex">N=3</script>. It turns out it’s <script type="math/tex">\frac{1}{24}</script> for <script type="math/tex">N=4</script>, and which leads us to realize that it’s off by <script type="math/tex">\frac{1}{N!}</script>. The answer ends up being</p>
+
+<script type="math/tex; mode=display">N+1 - \frac{1}{N!}</script>
+
+<p>How you derive that is still hard, but knowing the answer helps, especially as you can use Wolfram Alpha to see if intermediate formulas are equal to the answer.</p>
+
+<details>
+<br />
+<summary>
+Here's how you can derive the answer.
+</summary>
+
+If we let $$S$$ be the sum of the run and $$X_k = \begin{cases} \text{the label of the $k$-th card} &amp; \text{if it is in the run} \\ 0 &amp; \text{otherwise} \end{cases}$$. Then
+
+$$
+\begin{align*}
+  E[S] &amp; = \sum_{k=1}^N E[X_i] \\
+  &amp; = \sum_{k=1}^N P(\text{$X_k$ is bigger than $X_{k-1}, \dots, X_{1}$}) \cdot E[X_k \mid \text{$X_k$ is bigger than $X_{k-1}, \dots, X_{1}$}] \\
+  &amp; = \sum_{k=1}^N \frac{1}{k!} E[X_k \mid \text{$X_k$ is the max of the first $k$}] \\
+  &amp; = \sum_{k=1}^N \frac{1}{k!} \cdot \Bigl[ k + \frac{k}{k+1} \cdot (N-k) \Bigr] \\
+  &amp; = \sum_{k=1}^N \frac{1}{k!} \cdot \frac{k^2 + k + Nk - k^2}{k+1} \\
+  &amp; = \sum_{k=1}^N \frac{Nk + k}{(k+1)!} \\
+  &amp; = (N+1) \sum_{k=1}^N \frac{k}{(k+1)!} \\
+  &amp; = (N+1) \sum_{k=1}^N \Bigl[ \frac{1}{k!} - \frac{1}{(k+1)!} \Bigr] \\
+  &amp; = (N+1) \Bigl[ \Bigl( \frac{1}{1!} - \frac{1}{2!} \Bigr) + \dots + \Bigl( \frac{1}{N!} - \frac{1}{(N+1)!} \Bigr) \Bigr] \\
+  &amp; = (N+1) \cdot \Bigl( 1 - \frac{1}{(N+1)!} \Bigr) \\
+  &amp; = N + 1 - \frac{1}{N!}
+\end{align*}
+$$
+
+</details>
+<p><br /></p>
+
+<h2 id="tips-and-tricks">Tips and Tricks</h2>
+
+    </div>
+    <script src="/assets/js/clipbutton.js"></script>
+  </div>
+</div>
+  </body>
+</html>
