@@ -58,24 +58,49 @@
 <li class="toc-entry toc-h2"><a href="#motivation">
 Motivation</a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#fall-2015-1e">
-Fall 2015 1(e)</a></li>
+<li class="toc-entry toc-h3"><a href="#fall-2015-mt1-1e">
+Fall 2015 MT1 1(e)</a></li>
 <li class="toc-entry toc-h3"><a href="#shuffled-deck-problem">
 Shuffled Deck Problem</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#tips-and-tricks">
-Tips and Tricks</a></li>
+<li class="toc-entry toc-h2"><a href="#overview">
+Overview</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#monte-carlo-method">
+Monte Carlo method</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#nprandomrand">
+np.random.rand()</a></li>
+<li class="toc-entry toc-h4"><a href="#other-things-about-nprandom">
+Other Things About np.random</a></li>
+<li class="toc-entry toc-h4"><a href="#fallbacks-of-monte-carlo">
+Fallbacks of Monte Carlo</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#brute-force--dynamic-programming">
+Brute Force / Dynamic Programming</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#itertools">
+itertools</a></li>
+<li class="toc-entry toc-h4"><a href="#fallbacks-of-brute-force">
+Fallbacks of Brute Force</a></li>
+<li class="toc-entry toc-h4"><a href="#dynamic-programming">
+Dynamic Programming</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
     </div>
     <div class="content">
     <h1 id="computing-probabilities-and-expectations">Computing Probabilities and Expectations</h1>
 
-<p>Coding is pretty underrated when it comes to a subject like probability. EECS 126 is so focused on the math that the importance of, e.g. being able to simulate a random process, is often lost.</p>
+<p>Coding is pretty underrated when it comes to a subject like probability. EECS 126 is so focused on math that the importance of, e.g. being able to simulate a random process, is often lost.</p>
 
 <h2 id="motivation">Motivation</h2>
 
-<h3 id="fall-2015-1e">Fall 2015 1(e)</h3>
+<h3 id="fall-2015-mt1-1e">Fall 2015 MT1 1(e)</h3>
 
 <p>Code is illuminating because it can verify answers. For example, here’s the question and solution for <a href="/assets/computing/fa15_sol.pdf">1(e) on Midterm 1 of Fall 2015</a>.</p>
 
@@ -105,7 +130,7 @@ Tips and Tricks</a></li>
   <img src="/assets/computing/output.png" width="649px" height="77px" />
 </div>
 
-<p>our expected answer based on the formula <script type="math/tex">\frac{51}{100}Y</script> and the actual empirical <script type="math/tex">E[Z \mid Y]</script> don’t match up. Even though they only differ by a slight amount (50.49 vs 50.27), that’s 24 standard deviations given the fact we had 197588 samples. And since the CLT tells us that our empirical <script type="math/tex">E[Z \mid Y]</script> will be normally distributed around its true value, 24 standard deviations away basically happens with 0 probability.</p>
+<p>our expected answer based on the formula <script type="math/tex">\frac{51}{100}Y</script> and the actual empirical <script type="math/tex">E[Z \mid Y]</script> don’t match up. Even though they only differ by a slight amount (50.49 vs 50.27), that’s 24 standard deviations given the fact we had 197,588 samples. And since the CLT tells us that our empirical <script type="math/tex">E[Z \mid Y]</script> will be normally distributed around its true value, 24 standard deviations away basically happens with 0 probability.</p>
 
 <p>The issue ends up being very subtle, but it relates to the fact that <script type="math/tex">\sum_{i \not = j} E[X_i \mid Y]</script> doesn’t make sense since <script type="math/tex">j</script> is random. The correct answer ends up being</p>
 
@@ -115,7 +140,7 @@ Tips and Tricks</a></li>
 
 <h3 id="shuffled-deck-problem">Shuffled Deck Problem</h3>
 
-<p>Code can also guide us to answers. Consider this problem that we were considering putting on the Spring 2019 Final:</p>
+<p>Code can also guide us to answers. Consider this problem:</p>
 
 <blockquote>
   <p>You have a randomly shuffled deck of cards labeled 1 to N. You keep drawing cards from the top of the deck while the numbers increase. What is expected sum of this increasing run?</p>
@@ -126,11 +151,11 @@ Tips and Tricks</a></li>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="n">tup</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">0</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">tup</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="k">while</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">tup</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">tup</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
-        <span class="n">s</span> <span class="o">+=</span> <span class="n">tup</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="n">i</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">tup</span><span class="p">)</span> <span class="ow">and</span> <span class="n">tup</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">tup</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">tup</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">s</span>
 </code></pre></div></div>
 
@@ -141,8 +166,7 @@ Tips and Tricks</a></li>
     <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">permutation</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">+</span><span class="mi">1</span><span class="p">)):</span>
         <span class="n">s</span> <span class="o">+=</span> <span class="n">score</span><span class="p">(</span><span class="n">permutation</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">s</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">N</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">N</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">'N: {N} Expectation: {s / math.factorial(N)}'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <div>
@@ -182,7 +206,120 @@ $$
 </details>
 <p><br /></p>
 
-<h2 id="tips-and-tricks">Tips and Tricks</h2>
+<h2 id="overview">Overview</h2>
+
+<p>When it comes to computing probabilities and expectations, it’s ususally either Monte Carlo or brute force / dynamic programming.</p>
+
+<h3 id="monte-carlo-method">Monte Carlo method</h3>
+
+<p>Monte Carlo kind of just means randomly simulating a process and averaging results to calculate a value. For example, one of the classic ways to approximate <script type="math/tex">\pi</script> is to randomly throw darts at square and see what proportion of them lie in a quarter-circle. If we let <script type="math/tex">Z_i</script> be an indicator random variable for a whether dart is in the circle, we know that</p>
+
+<script type="math/tex; mode=display">P(Z_i = 1) = \frac{\text{Area of quarter-circle}}{\text{Area of square}} = \frac{\frac{1}{4} \cdot \pi \cdot 1^2}{1 \cdot 1} = \frac{\pi}{4}</script>
+
+<p>And since we know that the proportion of darts in the circle, <script type="math/tex">\frac{1}{N} \sum\limits_{i=1}^N Z_i</script>, converges to its expectation, <script type="math/tex">\frac{\pi}{4}</script>, by the LLN / CLT, that means if we have enough samples we can approximate <script type="math/tex">\pi</script> as 4 times that proportion.</p>
+
+<div align="middle">
+  <img src="/assets/computing/monte_carlo.gif" width="500px" height="500px" />
+</div>
+
+<h4 id="nprandomrand">np.random.rand()</h4>
+
+<p>When it comes to Monte Carlo, the tools you’ll be using mostly involve the <code class="highlighter-rouge">np.random</code> module. The most important of which is <code class="highlighter-rouge">np.random.rand</code> (or <code class="highlighter-rouge">np.random.random_sample</code>, <code class="highlighter-rouge">np.random.random</code>, etc., they all do the same thing).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">d0</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">dn</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">np.random.rand(10)</code> creates a length 10 array of random floats between <script type="math/tex">[0, 1)</script>. <code class="highlighter-rouge">np.random.rand(3, 3)</code> does that but for a <script type="math/tex">3 \times 3</script> matrix. <code class="highlighter-rouge">np.random.rand()</code> just returns one random float.</p>
+
+<p>Here’s the approximation to <script type="math/tex">\pi</script> using this function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">SAMPLES</span> <span class="o">=</span> <span class="mi">100000</span>
+
+<span class="c"># x and y coordinate for each sample</span>
+<span class="n">points_on_square</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">SAMPLES</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c"># d^2 = x^2 + y^2</span>
+<span class="n">distance_squared</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">points_on_square</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c"># 1 if d^2 &lt;= 1, 0 otherwise</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">distance_squared</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">proportion</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">z</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s">'Pi: {4 * proportion}'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">np.random.rand</code> is also important because you can basically sample from any continuous distribution with it so long as you know the inverse of the CDF, <script type="math/tex">F^{-1}(x)</script>. For example for an exponential random variable <script type="math/tex">F(x) = 1 - e^{-\lambda x}</script>, so if we wanted to generate a random <script type="math/tex">x</script> we could let <script type="math/tex">u</script> be a random number from <script type="math/tex">[0, 1)</script> and then set <script type="math/tex">1 - e^{- \lambda x} = u</script>, or <script type="math/tex">x = - \frac{\ln (1 - u)}{\lambda}</script>. It turns out that if we follow this procedure, the <script type="math/tex">x</script>’s we generate will be distributed exponentially.</p>
+
+<p>Here are some exercises you might want to try.</p>
+
+<ul>
+  <li>Uniformly randomly generate a point in a circle of radius <script type="math/tex">r</script>.</li>
+  <li>Uniformly randomly generate a point on a sphere of radius <script type="math/tex">r</script>.</li>
+  <li>Uniformly randomly generate a point in the region between two circles of radii <script type="math/tex">r_1</script> and <script type="math/tex">r_2</script>.</li>
+</ul>
+
+<h4 id="other-things-about-nprandom">Other Things About np.random</h4>
+
+<p>Another important method is <code class="highlighter-rouge">np.random.randint</code>. <code class="highlighter-rouge">np.random.randint(6) + 1</code> randomly generates a dice roll from 1 to 6. <code class="highlighter-rouge">np.random.randint(2000, 2020)</code> randomly generates a year from 2000 to 2019, but does not include 2020. You can do <code class="highlighter-rouge">np.random.randint(1, 7, size=100)</code> to randomly generate 100 dice rolls.</p>
+
+<p>Here’s a <a href="https://docs.scipy.org/doc/numpy/reference/routines.random.html">full list</a> of the functions in the <code class="highlighter-rouge">np.random</code> module. It includes functions for sampling from common distributions directly, e.g. exponential.</p>
+
+<h4 id="fallbacks-of-monte-carlo">Fallbacks of Monte Carlo</h4>
+
+<p>We do Monte Carlo in the Fall 2015 MT1 1(e) code: we essentially simulate 50 rolls and then look at the average. But our code is not that efficient because we’re looking for a conditional expectation, i.e. we only care about the average roll given the max roll. That’s why even though we generate 500,000 samples, only 197,588 are used for when we’re looking at <script type="math/tex">E[Z \mid Y = 99]</script>. For smaller max rolls, the issue becomes more severe. For example the probability of the max roll being at most 49 is <script type="math/tex">(\frac{50}{100})^{-50} = 2^{-50}</script>, so we’ll basically never get even get one sample for cases where <script type="math/tex">Y \leq 49</script>.</p>
+
+<p>Even when we are able to use all of our samples though, Monte Carlo still isn’t great. For example the code above that uses 100,000 samples to approximate <script type="math/tex">\pi</script> returns 3.14984, which isn’t even accurate to the 3rd digit.</p>
+
+<p><em>Note: sometimes you can be smarter about Monte Carlo in that you don’t waste many samples, but that’s not the case here</em>.</p>
+
+<h3 id="brute-force--dynamic-programming">Brute Force / Dynamic Programming</h3>
+
+<p>This is where the second technique come in. Sometimes it’s possible to enumerate (i.e. brute force) over all outcomes and simply calculate the expectation. For example, in the Shuffled Deck Problem, in order to figure out the expected length of the first run, we enumerated over all <script type="math/tex">N!</script> ways that the deck could have been shuffled and calculated the run length for each one. Since each permutation of the deck was equally likely, we could simply average all these run lengths in the end to produce the expectation. Monte Carlo simulation would have just involved randomly generating a permutation and calculating the run sum for each one, but here <script type="math/tex">N</script> is small enough that we can just go through every possible permutation.</p>
+
+<h4 id="itertools">itertools</h4>
+
+<p>For these combinatorial brute forces, the tools you typically want to use are in Python’s <code class="highlighter-rouge">itertools</code> library. The documentation is <a href="https://docs.python.org/3/library/itertools.html">linked here</a>, but the important functions are:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">itertools.product</code>. This returns a generator for Cartesian products.
+    <ul>
+      <li><code class="highlighter-rouge">itertools.product(['H', 'T'], repeat=4)</code> will return all possible outcomes from 4 coin flips.</li>
+      <li><code class="highlighter-rouge">itertools.product(['H', 'T'], range(1, 7))</code> will return all possible outcomes of a coin flip then a dice roll.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">itertools.permutations</code>. This returns a generator for permutations.
+    <ul>
+      <li><code class="highlighter-rouge">itertools.permutations(range(1, N+1))</code> will return all permutations of integers 1 to <script type="math/tex">N</script>, which we used in the Shuffled Deck Problem.</li>
+      <li><code class="highlighter-rouge">itertools.permutations(['Argentina', 'Belgium', 'Brazil', 'England', 'France', 'Germany', 'Portugal', 'Spain'], r=3)</code> will return every 3-permutation out of these 8 options, maybe representing the Top 3 at the World Cup.</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">itertools.combinations</code>. This returns a generator for combinations, and it basically acts the same way as permutations.</li>
+</ul>
+
+<h4 id="fallbacks-of-brute-force">Fallbacks of Brute Force</h4>
+
+<p>The issue with brute force is of course, you’re brute forcing. It wasn’t feasible for Fall 2015 MT1 1(e) because there are <script type="math/tex">100^{50}</script> ways roll a 100-sided die 50 times. Even for the shuffled deck problem, it wouldn’t really be feasible for <script type="math/tex">N</script> greater than 10. When this issue occurs, we sometimes need to fall back on Monte Carlo. But also sometimes we don’t need to because there’s a pattern or recurrence relation going on. And in those cases we can take advantage of dynamic programming.</p>
+
+<h4 id="dynamic-programming">Dynamic Programming</h4>
+
+<!-- We can't brute force Fall 2015 MT1 1(e) because there are $$100^{50}$$ outcomes. But it turns out there is a "pattern" that reduces the need for this. One thing to note is that the average of $$n$$ rolls given that every roll is at most $$Y$$ is simple, it's just $$n \cdot \frac{Y}{2}$$. It's the fact that every roll is at most $$Y$$ **and** there is at least one roll equal to $$Y$$ that makes it hard.
+
+$$
+\begin{align*}
+  E[Z \mid Y] & = E[\text{average of 50 rolls} \mid \text{max is $Y$}] \\
+  & = \frac{1}{50} \cdot E[\text{sum of 50 rolls} \mid \text{max is $Y$}] \\
+  & = \frac{1}{50} \cdot E[\text{sum of 50 rolls} \mid \text{max is $Y$ and we haven't seen a $Y$ yet}]
+\end{align*}
+$$
+
+Let's say $$f(n) = E[\text{sum of $n$ rolls} \mid \text{max is $Y$ and we haven't seen a $Y$ yet}]$$ and that $$p = P(\text{$N$-th flip is a $Y$} \mid \text{max is $Y$ and we haven't seen a $Y$ yet})$$. Then by the law of iterated expectation,
+
+$$
+\begin{align*}
+  f(n) = p \cdot (Y + (n-1) \cdot \frac{Y}{2}) + (1-p) \cdot (\frac{Y-1}{2} + f(n-1))
+\end{align*}
+$$
+
+This is true because if the $$N$$-th flip is a $$Y$$, then our expectated sum is $$Y$$ plus the expected sum of $$N-1$$ flips given that the max is $$Y$$ but now that **we have seen a $$Y$$** -->
 
     </div>
     <script src="/assets/js/clipbutton.js"></script>

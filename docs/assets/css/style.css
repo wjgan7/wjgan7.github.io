@@ -113,3 +113,8 @@ h3 {
 details span.mjx-chtml.MJXc-display {
   display: inline-block;
 }
+
+/* Hack to fix block math in table */
+table span.mjx-chtml.MJXc-display {
+  display: inline-block;
+}
