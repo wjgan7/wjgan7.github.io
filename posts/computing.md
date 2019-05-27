@@ -43,7 +43,7 @@ print(f'Y={Y} samples={samples}\n' +
 
 our expected answer based on the formula $$\frac{51}{100}Y$$ and the actual empirical $$E[Z \mid Y]$$ don't match up. Even though they only differ by a slight amount (50.49 vs 50.27), that's 24 standard deviations given the fact we had 197,588 samples. And since the CLT tells us that our empirical $$E[Z \mid Y]$$ will be normally distributed around its true value, 24 standard deviations away basically happens with 0 probability.
 
-The issue ends up being very subtle, but it relates to the fact that $$\sum_{i \not = j} E[X_i \mid Y]$$ doesn't make sense since $$j$$ is random. The correct answer ends up being
+The issue ends up being very subtle, but it relates to the fact that $$\sum_{i \not = j} E[X_i \mid Y]$$ doesn't make sense since $$j$$ is random. It's not pretty, but the correct answer ends up being
 
 $$E[Z \mid Y] = \frac{\frac{Y(Y-1)}{2} ((Y+1)^{49} - Y^{49}) + Y(Y+1)^{49}}{(Y+1)^{50} - Y^{50}}$$
 
@@ -55,7 +55,7 @@ Code can also guide us to answers. Consider this problem:
 
 > You have a randomly shuffled deck of cards labeled 1 to N. You keep drawing cards from the top of the deck while the numbers increase. What is expected sum of this increasing run?
 
-The answer to this question is elegant, but it turns out finding it mostly involves algebraic bashing with factorials. In fact, it would probably be very hard to get a derivation for the answer without knowing it in the first place. This is where code comes in.
+The answer to this question is elegant, but it turns out finding it mostly involves algebraic bashing. In fact, it's really hard to derive the answer without knowing it in the first place. This is where code comes in.
 
 ```python
 def score(tup):
@@ -93,7 +93,7 @@ How you derive that is still hard, but knowing the answer helps, especially as y
 <details>
 <br>
 <summary>
-Here's how you can derive the answer.
+Here's how you can derive the answer. Credits to fellow TA Efe and his friend Forest.
 </summary>
 
 If we let $$S$$ be the sum of the run and $$X_k = \begin{cases} \text{the label of the $k$-th card} & \text{if it is in the run} \\ 0 & \text{otherwise} \end{cases}$$. Then
@@ -123,7 +123,7 @@ When it comes to computing probabilities and expectations, it's ususally either 
 
 ### Monte Carlo method
 
-Monte Carlo kind of just means randomly simulating a process and averaging results to calculate a value. For example, one of the classic ways to approximate $$\pi$$ is to randomly throw darts at square and see what proportion of them lie in a quarter-circle. If we let $$Z_i$$ be an indicator random variable for a whether dart is in the circle, we know that
+Monte Carlo kind of just means randomly simulating a process and averaging results to calculate a value. For example, one of the classic ways to approximate $$\pi$$ is to randomly throw darts at square and see what proportion of them lie in a quarter-circle. If we let $$Z_i$$ be an indicator random variable for a whether dart is in the quarter-circle, we know that
 
 $$P(Z_i = 1) = \frac{\text{Area of quarter-circle}}{\text{Area of square}} = \frac{\frac{1}{4} \cdot \pi \cdot 1^2}{1 \cdot 1} = \frac{\pi}{4}$$
 
@@ -184,7 +184,7 @@ Even when we are able to use all of our samples though, Monte Carlo still isn't 
 
 ### Brute Force / Dynamic Programming
 
-This is where the second technique come in. Sometimes it's possible to enumerate (i.e. brute force) over all outcomes and simply calculate the expectation. For example, in the Shuffled Deck Problem, in order to figure out the expected length of the first run, we enumerated over all $$N!$$ ways that the deck could have been shuffled and calculated the run length for each one. Since each permutation of the deck was equally likely, we could simply average all these run lengths in the end to produce the expectation. Monte Carlo simulation would have just involved randomly generating a permutation and calculating the run sum for each one, but here $$N$$ is small enough that we can just go through every possible permutation.
+This is where the second technique come in. Sometimes it's possible to enumerate (i.e. brute force) over all outcomes and calculate the expectation exactly. For example, in the Shuffled Deck Problem, in order to figure out the expected length of the first run, we enumerated over all $$N!$$ ways that the deck could have been shuffled and calculated the run length for each one. Since each permutation of the deck was equally likely, we simply averaged all these run lengths in the end to produce the expectation.
 
 #### itertools
 
@@ -200,26 +200,53 @@ For these combinatorial brute forces, the tools you typically want to use are in
 
 #### Fallbacks of Brute Force
 
-The issue with brute force is of course, you're brute forcing. It wasn't feasible for Fall 2015 MT1 1(e) because there are $$100^{50}$$ ways roll a 100-sided die 50 times. Even for the shuffled deck problem, it wouldn't really be feasible for $$N$$ greater than 10. When this issue occurs, we sometimes need to fall back on Monte Carlo. But also sometimes we don't need to because there's a pattern or recurrence relation going on. And in those cases we can take advantage of dynamic programming.
+The issue with brute force is of course, you're brute forcing. It isn't feasible for Fall 2015 MT1 1(e) because there are $$100^{50}$$ ways roll a 100-sided die 50 times. Even for the shuffled deck problem, it isn't really be feasible for $$N$$ greater than 10. When this issue occurs, we sometimes need to fall back on Monte Carlo. But actually sometimes we don't need to because there's a recurrence going on. And in those cases we can take advantage of dynamic programming.
 
 #### Dynamic Programming
 
-<!-- We can't brute force Fall 2015 MT1 1(e) because there are $$100^{50}$$ outcomes. But it turns out there is a "pattern" that reduces the need for this. One thing to note is that the average of $$n$$ rolls given that every roll is at most $$Y$$ is simple, it's just $$n \cdot \frac{Y}{2}$$. It's the fact that every roll is at most $$Y$$ **and** there is at least one roll equal to $$Y$$ that makes it hard.
+We can't brute force Fall 2015 MT1 1(e) because there are $$100^{50}$$ outcomes. But let's look at the problem. It's hard because we're saying the max is $$Y$$. This means that every roll is at most $$Y$$ **and** there is at least one roll equal to $$Y$$. If it were just that every roll is at most $$Y$$, the expected average would just be $$\frac{Y}{2}$$. However, it turns out there is a recurrence relation that makes the max case simple as well.
+
+Say we let $$f(n)$$ be the expected **sum** of $$n$$ rolls given that the max of these $$n$$ rolls is $$Y$$. $$E[Z \mid Y]$$ is the expected **average** with $$n = 50$$, so our "answer" is $$\frac{1}{50} f(50)$$. $$f(n)$$ is nice because if we let $$p(n)$$ be the probability that the $$n$$-th roll is a $$Y$$, then
 
 $$
-\begin{align*}
-  E[Z \mid Y] & = E[\text{average of 50 rolls} \mid \text{max is $Y$}] \\
-  & = \frac{1}{50} \cdot E[\text{sum of 50 rolls} \mid \text{max is $Y$}] \\
-  & = \frac{1}{50} \cdot E[\text{sum of 50 rolls} \mid \text{max is $Y$ and we haven't seen a $Y$ yet}]
-\end{align*}
+f(n) = p(n) \cdot (Y + (n-1) \cdot \frac{Y}{2}) + (1 - p(n)) \cdot (\frac{Y-1}{2} + f(n-1))
 $$
 
-Let's say $$f(n) = E[\text{sum of $n$ rolls} \mid \text{max is $Y$ and we haven't seen a $Y$ yet}]$$ and that $$p = P(\text{$N$-th flip is a $Y$} \mid \text{max is $Y$ and we haven't seen a $Y$ yet})$$. Then by the law of iterated expectation,
+The reasoning behind this formula is as follows. If the $$n$$-th roll is a $$Y$$, then we don't need to worry about there being at least one roll equal to $$Y$$ for the remaining $$n-1$$ rolls, and the expected sum is  the $$Y$$ we rolled plus the expected sum of $$n-1$$ rolls that are at most $$Y$$, which is $$(n-1) \cdot \frac{Y}{2}$$. On the other hand, if the $$n$$-th roll is not a $$Y$$, then its expectation is $$\frac{Y-1}{2}$$, and the expected sum of the remaining rolls is $$f(n-1)$$.
 
-$$
-\begin{align*}
-  f(n) = p \cdot (Y + (n-1) \cdot \frac{Y}{2}) + (1-p) \cdot (\frac{Y-1}{2} + f(n-1))
-\end{align*}
-$$
+So what's $$p(n)$$? The answer is
 
-This is true because if the $$N$$-th flip is a $$Y$$, then our expectated sum is $$Y$$ plus the expected sum of $$N-1$$ flips given that the max is $$Y$$ but now that **we have seen a $$Y$$** -->
+$$p(n) = \frac{(Y+1)^{n-1}}{(Y+1)^n - Y^n}$$
+
+There are $$(Y+1)^n$$ ways roll a die $$n$$ times such that every roll is at most $$Y$$, i.e. from $$0, 1, 2, \dots, Y$$. Of those, $$Y^n$$ of them are at most $$Y-1$$, which means there isn't at least one roll equal to $$Y$$. So the number of ways roll the die such that the max is $$Y$$ is $$(Y+1)^n - Y^n$$. Of those, there are $$(Y+1)^{n-1}$$ ways to roll such that the $$n$$-flip is a $$Y$$, since if it is, then the other $$n-1$$ rolls just need to be at most $$Y$$.
+
+Here's the code calculating $$E[Z \mid Y = 99]$$ using the recurrence relation above.
+
+```python
+import numpy as np
+
+f = np.zeros(51)
+f[0] = 0
+
+Y = 99
+
+for n in range(1, 51):
+    p = (Y+1)**(n-1) / ((Y+1)**n - Y**n)
+    f[n] = p * (Y + (n-1) * Y/2) + (1-p) * ((Y-1)/2 + f[n-1])
+
+print(f'E[Z | Y={Y}]: {f[50]/50}')
+```
+
+<div>
+  <img src="/assets/computing/dp_output.png" width="293px" height="34px">
+</div>
+
+This code is a lot more efficient than the Monte Carlo version, computes the **exact** answer, and also works for different values of $$Y$$.
+
+Dynamic programming is pretty hard: it's not easy to see the "state", the recurrence, or figure out $$p(n)$$. But the takeaway is that it can enable us to compute probabilities and expectations in an efficient matter. Furthermore, you get a lot better at figuring these states and recurrences with practice and the common ways to recurse.
+
+<!-- Here are some exercises you might want to try. -->
+
+## Conclusion
+
+Code can be useful for verifying and finding answers. Actually, there are some problems that don't have closed-form solutions but can still be approximated with Monte Carlo simulation or computed exactly with brute force / dynamic programming. In general these two techniques represent contrasting ways to compute probabilites and expectations. Monte Carlo simulation is easy to implement but is often inefficient and will only give you rough answers. Brute force / dynamic programming will give you exact answers, and dynamic programming in particular is efficient. However, this comes at the cost of being hard to implement and bug prone, and not all problems can be solved in such a manner. Getting good at both can improve your understanding of probability and is also pretty useful practically.
