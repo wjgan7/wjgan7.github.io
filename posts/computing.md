@@ -218,7 +218,7 @@ So what's $$p(n)$$? The answer is
 
 $$p(n) = \frac{(Y+1)^{n-1}}{(Y+1)^n - Y^n}$$
 
-There are $$(Y+1)^n$$ ways roll a die $$n$$ times such that every roll is at most $$Y$$, i.e. from $$0, 1, 2, \dots, Y$$. Of those, $$Y^n$$ of them are at most $$Y-1$$, which means there isn't at least one roll equal to $$Y$$. So the number of ways roll the die such that the max is $$Y$$ is $$(Y+1)^n - Y^n$$. Of those, there are $$(Y+1)^{n-1}$$ ways to roll such that the $$n$$-flip is a $$Y$$, since if it is, then the other $$n-1$$ rolls just need to be at most $$Y$$.
+There are $$(Y+1)^n$$ ways roll a die $$n$$ times such that every roll is at most $$Y$$. Of those, there are $$Y^n$$ ways roll a die $$n$$ times such that every role is at most $$Y-1$$, in which case there won't be at least one roll equal to $$Y$$. So the number of ways to roll the die such that the max is $$Y$$ is $$(Y+1)^n - Y^n$$. Of those, there are $$(Y+1)^{n-1}$$ ways to roll such that the $$n$$-flip is a $$Y$$, since if it is, then the other $$n-1$$ rolls just need to be at most $$Y$$.
 
 Here's the code calculating $$E[Z \mid Y = 99]$$ using the recurrence relation above.
 
