@@ -198,7 +198,7 @@ For these combinatorial brute forces, the tools you typically want to use are in
   * `itertools.permutations(['Argentina', 'Belgium', 'Brazil', 'England', 'France', 'Germany', 'Portugal', 'Spain'], r=3)` will return every 3-permutation out of these 8 options, maybe representing the Top 3 at the World Cup.
 * `itertools.combinations`. This returns a generator for combinations, and it basically acts the same way as permutations.
 
-#### Fallbacks of Brute Force
+#### Drawbacks of Brute Force
 
 The issue with brute force is of course, you're brute forcing. It isn't feasible for Fall 2015 MT1 1(e) because there are $$100^{50}$$ ways roll a 100-sided die 50 times. Even for the shuffled deck problem, it isn't really be feasible for $$N$$ greater than 10. When this issue occurs, we sometimes need to fall back on Monte Carlo. But actually sometimes we don't need to because there's a recurrence going on. And in those cases we can take advantage of dynamic programming.
 

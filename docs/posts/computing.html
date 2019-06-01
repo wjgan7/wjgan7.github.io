@@ -251,7 +251,7 @@ $$
   <li><code class="highlighter-rouge">itertools.combinations</code>. This returns a generator for combinations, and it basically acts the same way as permutations.</li>
 </ul>
 
-<h4 id="fallbacks-of-brute-force">Fallbacks of Brute Force</h4>
+<h4 id="drawbacks-of-brute-force">Drawbacks of Brute Force</h4>
 
 <p>The issue with brute force is of course, you’re brute forcing. It isn’t feasible for Fall 2015 MT1 1(e) because there are <script type="math/tex">100^{50}</script> ways roll a 100-sided die 50 times. Even for the shuffled deck problem, it isn’t really be feasible for <script type="math/tex">N</script> greater than 10. When this issue occurs, we sometimes need to fall back on Monte Carlo. But actually sometimes we don’t need to because there’s a recurrence going on. And in those cases we can take advantage of dynamic programming.</p>
 
