@@ -2,20 +2,13 @@
 layout: default
 ---
 
-<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
 
 <div class="body-center">
   <div class="container">
-    <!-- <script>
-      addShrinkListener(document.getElementById("container"))
-    </script> -->
-    <div class="sidebar">
-    <h3> <a href="/index.html">Home</a> </h3>
-    {{ content | inject_anchors | toc_only }}
-    </div>
     <div class="content">
-    {{ content }}
+      <h3> <a href="/index.html">Home</a> </h3>
+      {{ content }}
     </div>
     <script src="/assets/js/clipbutton.js"></script>
   </div>
