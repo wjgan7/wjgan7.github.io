@@ -93,7 +93,7 @@ How you derive that is still hard, but knowing the answer helps, especially as y
 <details>
 <br>
 <summary>
-Here's how you can derive the answer. Credits to fellow TA Efe and his friend Forest.
+Here's how you can derive the answer. Credits to Forest Yang.
 </summary>
 
 If we let $$S$$ be the sum of the run and $$X_k = \begin{cases} \text{the label of the $k$-th card} & \text{if it is in the run} \\ 0 & \text{otherwise} \end{cases}$$. Then
