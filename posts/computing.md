@@ -178,7 +178,7 @@ Here's a [full list](https://docs.scipy.org/doc/numpy/reference/routines.random.
 
 We do Monte Carlo in the Fall 2015 MT1 1(e) code: we essentially simulate 50 rolls and then look at the average. But our code is not that efficient because we're looking for a conditional expectation, i.e. we only care about the average roll given the max roll. That's why even though we generate 500,000 samples, only 197,588 are used for when we're looking at $$E[Z \mid Y = 99]$$. For smaller max rolls, the issue becomes more severe. For example the probability of the max roll being at most 49 is $$(\frac{50}{100})^{-50} = 2^{-50}$$, so we'll basically never get even get one sample for cases where $$Y \leq 49$$.
 
-Even when we are able to use all of our samples though, Monte Carlo still isn't great. For example the code above that uses 100,000 samples to approximate $$\pi$$ returns 3.14984, which isn't even accurate to the 3rd digit.
+Even when we are able to use all of our samples though, Monte Carlo still isn't great. For example the code above that uses 100,000 samples to approximate $$\pi$$ returns 3.14984, which isn't even accurate to the 3rd decimal place.
 
 *Note: sometimes you can be smarter about Monte Carlo in that you don't waste many samples, but that's not the case here*.
 
