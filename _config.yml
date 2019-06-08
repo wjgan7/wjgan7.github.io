@@ -1,13 +1,8 @@
-destination: /Users/wjgan/Documents/wjgan7.github.io/docs
+destination: /Users/wjgan/Documents/wjgan7.github.io/_site
 
 plugins:
-  - jekyll-toc
+  - github-pages
   - jekyll-seo-tag
-
-# Jekyll TOC
-toc:
-  min_level: 2
-  max_level: 4
 
 # Jekyll Seo Tag
 url: https://wjgan.com

@@ -9,10 +9,6 @@ a { color: #267CB9; text-decoration: none; }
 
 a:hover, a:focus { color: #069; font-weight: bold; }
 
-a small { font-size: 11px; color: #777; margin-top: -0.3em; display: block; }
-
-a:hover small { color: #777; }
-
 blockquote { border-left: 1px solid #e5e5e5; margin: 0; padding: 0 0 0 20px; font-style: italic; }
 
 pre { padding: 8px 15px; background: #f8f8f8; border-radius: 5px; border: 1px solid #e5e5e5; overflow-x: auto; }
@@ -117,4 +113,16 @@ details span.mjx-chtml.MJXc-display {
 /* Hack to fix block math in table */
 table span.mjx-chtml.MJXc-display {
   display: inline-block;
+}
+
+/* Mobile link clicking */
+@media (max-device-width: 480px) {
+  ul {
+    list-style-type: none;
+    padding: 0px;
+  }
+
+  li {
+    margin-bottom: 20px;
+  }
 }
