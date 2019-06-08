@@ -1,7 +1,6 @@
 ---
 layout: post
 title: LaTeX
-toc: true
 ---
 
 # LaTeX Reference for Probability
@@ -24,8 +23,6 @@ These are commands you would define in the preamble.
 
 ### Absolute Value
 
----
-
 ```tex
 \newcommand{\abs}[1]{\lvert #1 \rvert}
 \newcommand{\bigabs}[1]{\Bigl \lvert #1 \Bigr \rvert}
@@ -36,7 +33,6 @@ These are commands you would define in the preamble.
 
 ### Bigger Brackets
 
----
 
 ```tex
 \newcommand{\bigbracket}[1]{\Bigl [ #1 \Bigr ]}
@@ -46,8 +42,6 @@ These are commands you would define in the preamble.
 
 ### Bigger Parentheses
 
----
-
 ```tex
 \newcommand{\bigparen}[1]{\Bigl ( #1 \Bigr )}
 ```
@@ -55,8 +49,6 @@ These are commands you would define in the preamble.
 * `\bigparen{1 + \frac{1}{n}}^n` becomes $${\Bigl ( 1 + \frac{1}{n} \Bigr )}^n$$
 
 ### Ceiling and Floor
-
----
 
 ```tex
 \newcommand{\ceil}[1]{\lceil #1 \rceil}
@@ -70,8 +62,6 @@ These are commands you would define in the preamble.
 
 ### Norms
 
----
-
 ```tex
 \newcommand{\norm}[1]{\| #1 \|}
 \newcommand{\bignorm}[1]{\Bigl \| #1 \Bigr \| #1}
@@ -82,8 +72,6 @@ These are commands you would define in the preamble.
 
 ### Inner Product
 
----
-
 ```tex
 \newcommand{\inner}[1]{\langle #1 \rangle}
 ```
@@ -92,8 +80,6 @@ These are commands you would define in the preamble.
 
 ### Sets
 
----
-
 ```tex
 \newcommand{\set}[1]{\{ #1 \}}
 ```
@@ -101,8 +87,6 @@ These are commands you would define in the preamble.
 * `\set{0, 1}^n` becomes $$\{ 0, 1 \}^n$$
 
 ### Style Files
-
----
 To avoid defining these commands in the preamble of every document, you can make
 .sty file that contains these commands. For example, add this file
 [eecs.sty](/assets/eecs.sty) to an Overleaf project and then add the following
@@ -129,8 +113,6 @@ this
 
 ### Intersection / Union
 
----
-
 ```tex
 $P(A \cap B)$
 ```
@@ -145,15 +127,11 @@ becomes $$P(\cup_{i=1}^n A_i)$$
 
 ### Complement
 
----
-
 * `\overline` or `\complement`
 * `$P(\overline{A})$` becomes $$P(\overline{A})$$
 * `$P(A^\complement)$` becomes $$P(A^\complement)$$
 
 ### Set Subtraction
-
----
 
 ```tex
 $A^\complement = \Omega \setminus A$
@@ -171,8 +149,6 @@ becomes $$A \subset B$$ or $$A \subseteq B$$.
 
 ### Conditional Probability
 
----
-
 ```tex
 $P(A \mid B)$
 ```
@@ -182,8 +158,6 @@ becomes $$P(A \mid B)$$
 ## Symbols in Distributions
 
 ### Sim
-
----
 
 The squiggly `\sim` i.e. $$\sim$$
 
@@ -195,8 +169,6 @@ becomes $$X_i \stackrel{iid}{\sim} U[0, 1]$$
 
 ### Choose / nCr
 
----
-
 * Like found in binomial distribution formula
 * `binom{n}{k}` becomes $$\binom{n}{k}$$
 
@@ -207,8 +179,6 @@ P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}
 becomes $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}$$
 
 ### Fancy Expectation
-
----
 
 * `\mathbb{E}`
 * Need the `amssymb` package.
@@ -230,8 +200,6 @@ $E[X]$ vs. $\mathbb{E}[X]$
 * Integers: `\mathbb{Z}^+` becomes $$\mathbb{Z}^+$$
 
 ### Fancy Normal
-
----
 
 * `\mathcal{N}`
 * Needs the 'amssymb' package.
@@ -258,8 +226,6 @@ $X \sim N(0,1)$ vs. $X \sim \mathcal{N}(0, 1)$
   becomes $$E[X] = \sum_{x \in \mathcal{X}} x \cdot P(X = x)$$.
 
 ### w.p.
-
----
 
 ```tex
 \begin{equation}

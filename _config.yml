@@ -1,7 +1,6 @@
 destination: /Users/wjgan/Documents/wjgan7.github.io/_site
 
 plugins:
-  - github-pages
   - jekyll-seo-tag
 
 # Jekyll Seo Tag

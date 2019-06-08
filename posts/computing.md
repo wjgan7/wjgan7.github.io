@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Computation
-toc: true
 ---
 
 # Computing Probabilities and Expectations
