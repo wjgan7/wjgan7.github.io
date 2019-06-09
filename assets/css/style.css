@@ -47,7 +47,7 @@ img {
 
 body {
   font-family: 'Roboto';
-  font-size: 12pt;
+  font-size: 14pt;
   color: #24292e;
   margin: 40px;
 }
@@ -60,16 +60,18 @@ body {
 
 /* 26pt and blue */
 h1 {
-  font-size: 26pt;
+  font-weight: normal;
+  font-size: 36pt;
   color: #267CB9;
 }
 
 /* 20pt and black */
 h2 {
-  font-size: 20pt;
+  font-weight: normal;
+  font-size: 26pt;
 }
 
-/* 16pt and grey */
+/* 16pt and blue */
 h3 {
   font-weight: normal;
   font-size: 16pt;
@@ -94,13 +96,6 @@ h3 {
   width: fit-content;
   margin: 0 auto;
   display: block;
-}
-
-/* Reduce margins */
-@media (max-width: 480px) {
-  body {
-    margin: 20px;
-  }
 }
 
 /* Avatar Picture */
@@ -142,14 +137,14 @@ table span.mjx-chtml.MJXc-display {
   display: inline-block;
 }
 
-/* Mobile link clicking
-@media (max-device-width: 480px) {
-  ul {
-    list-style-type: none;
-    padding: 0px;
+/* Mobile changes */
+@media (max-width: 480px) {
+  /* Reduce margins */
+  body {
+    margin: 20px;
   }
-
+  /* Make bullet points further spread apart */
   li {
-    margin-bottom: 20px;
+    margin-bottom: 6px;
   }
-} */
+}
