@@ -49,7 +49,7 @@ body {
   font-family: 'Roboto';
   font-size: 12pt;
   color: #24292e;
-  padding: 30px;
+  margin: 40px;
 }
 
 .body-center {
@@ -99,7 +99,7 @@ h3 {
 /* Reduce margins */
 @media (max-width: 480px) {
   body {
-    padding: 0px;
+    margin: 20px;
   }
 }
 
