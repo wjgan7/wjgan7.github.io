@@ -60,20 +60,17 @@ body {
 
 /* 26pt and blue */
 h1 {
-  font-weight: normal;
   font-size: 36pt;
   color: #267CB9;
 }
 
 /* 20pt and black */
 h2 {
-  font-weight: normal;
   font-size: 26pt;
 }
 
 /* 16pt and blue */
 h3 {
-  font-weight: normal;
   font-size: 16pt;
   color: #267CB9;
 }
