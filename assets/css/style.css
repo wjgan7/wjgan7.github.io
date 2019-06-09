@@ -2,8 +2,12 @@
 /* https://github.com/pages-themes/minimal */
 
 h1, h2, h3, h4, h5, h6 {
-  /* font-weight: normal; */
+  width: fit-content;
   margin: 0 0 20px; 
+}
+
+ul {
+  width: fit-content;
 }
 
 p, ul, ol, table, pre, dl {
@@ -75,21 +79,21 @@ h3 {
 /* Layout Stuff */
 
 .container {
-  /* margin: 0 auto; */
-  display: inline-block;
-  max-width: fit-content;
+  margin: 0 auto;
+  display: block;
+  max-width: 1000px;
 }
 
-.sidebar {
-  vertical-align: top;
-  margin: 0 20px;
-  display: inline-block;
+.header {
+  width: fit-content;
+  margin: 0 auto;
+  display: block;
 }
 
 .content {
-  margin: 0 20px;
-  display: inline-block;
-  max-width: 1000px;
+  width: fit-content;
+  margin: 0 auto;
+  display: block;
 }
 
 /* Reduce margins */
@@ -102,9 +106,10 @@ h3 {
 /* Avatar Picture */
 
 .avatar {
-  vertical-align: middle;
-  margin-top: 10px;
   margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
   width: 170px;
   height: 170px;
   border-radius: 50%;
