@@ -14,7 +14,7 @@ title: William Gan
 * [Resume](/assets/resume.pdf)
 * [LinkedIn](https://linkedin.com/in/wjgan)
 * [Github](https://github.com/wjgan7)
-* Feel free to contact me at wjgan at berkeley dot edu!
+* Feel free to contact me at wjgan at berkeley dot edu
 
 ## Stuff Related to 126
 
