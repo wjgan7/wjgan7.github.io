@@ -5,8 +5,7 @@ title: William Gan
 
 ## About
 
-* I'm Will, a fourth year CS / Applied Math Major at UC Berkeley.
-* I'm currently a head TA for EECS 126.
+* I'm Will, a 5th Year Master's student in EECS at UC Berkeley.
 
 ## Links
 
