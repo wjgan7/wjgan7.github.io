@@ -50,7 +50,6 @@ otherwise. In this situation, teams 1 and 2 know all 3 answers, but team 3 only 
 2. What is the Nash equilibrium of this game?
 
 <div align="middle">
-![Alt text](image.png)
   <img src="/assets/sheep/simplified_sheep_game.png" align="middle" width="400px">
 </div>
 
@@ -64,7 +63,6 @@ should sum up to 1. Finally, $T_1$ and $T_2$ should have the same strategies giv
 same answers, so $T_2$ should have the same probabilities.
 
 <div align="middle">
-![Alt text](image.png)
   <img src="/assets/sheep/simplified_sheep_nash.png" align="middle" width="400px">
 </div>
 
@@ -82,7 +80,6 @@ For the probability that $T_1$ has a unique answer, it is illustrated in the dia
 calculated as
 
 <div align="middle">
-![Alt text](image.png)
   <img src="/assets/sheep/simplified_sheep_prob.png" align="middle" width="800px">
 </div>
 
