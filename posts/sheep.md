@@ -100,8 +100,10 @@ to 0. $$3 - 10x = 0$$ leads to an answer of 0.3
 
 ## Conclusion
 
-In the experiment above, the ideal strategy for team 1 and team 2 was to select answers 1 and 2 30%
-of the time and answer 3 slightly more often at 40% of the time. So the game theory optimal strategy
-is to do random with higher weight for obscure answers. In a real game though, I still like
+In the experiment above, the ideal strategy for was to select answers 1 and 2 30%
+of the time and answer 3 40% of the time. So applied to a larger game, the game theory optimal strategy
+is to do random, but with higher weight for obscure answers.
+
+In practice though, I still like
 uniformly at random, since you can be wrong about what's obscure and also teams will be in general
-be over-biased towards obscure answers, so we should exploit that. Don't be a sheep!
+be over-biased towards obscure answers.
