@@ -50,7 +50,6 @@ otherwise. In this situation, teams 1 and 2 know all 3 answers, but team 3 only 
 2. What is the Nash equilibrium of this game?
 
 <div align="middle">
-![Alt text](image.png)
   <img src="/assets/sheep/simplified_sheep_game.png" align="middle" width="400px">
 </div>
 
@@ -64,7 +63,6 @@ utilizing the fact that the row should sum up to 1. Finally, $$T_1$$ and $$T_2$$
 same strategies given they know the same answers, so $$T_2$$ should have the same probabilities.
 
 <div align="middle">
-![Alt text](image.png)
   <img src="/assets/sheep/simplified_sheep_nash.png" align="middle" width="400px">
 </div>
 
@@ -82,13 +80,12 @@ For the probability that $$T_1$$ has a unique answer, it is illustrated in the d
 calculated as
 
 <div align="middle">
-![Alt text](image.png)
   <img src="/assets/sheep/simplified_sheep_prob.png" align="middle" width="800px">
 </div>
 
 $$
 \begin{align*}
-P(\text{$T_1$ has unique answer}) &= P(\text{$T_1$ guesses $A_1$ and no on else guesses $A_1$}) + P(\text{$T_1$ guesses $A_2$ and no on else guesses $A_2$}) + P(\text{$T_1$ guesses $A_3$ and no on else guesses $A_3$}) \\
+P(\text{$T_1$ has unique answer}) &= \sum_{i=1}^3 P(\text{$T_1$ guesses $A_i$ and no on else guesses $A_i$}) \\
 &= x(1-x)(1/2) + x(1-x)(1/2) + (1-2x)(2x) \\
 &= x(1-x) + (1-2x)(2x) \\
 &= x - x^2 + 2x - 4x^2 \\
