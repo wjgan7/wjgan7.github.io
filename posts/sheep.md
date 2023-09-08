@@ -54,17 +54,19 @@ and 2. What is the Nash equilibrium of this game?
 </div>
 
 In the above diagram, each ? represents the probability that a team $$T$$ chooses an answer $$A$$.
-As probability sums up to 1, the rows should sum up to 1. For the Nash equilibrum, symmetry makes
-things easier to compute. In this game, because $$A_1$$ and $$A_2$$ are identical from the POV of
+As probability sums up to 1, the rows should sum up to 1.
+
+<div align="middle">
+  <img src="/assets/sheep/simplified_sheep_nash.png" align="middle" width="400px">
+</div>
+
+For the Nash equilibrum, symmetry makes things easier to compute. In this game, because $$A_1$$
+and $$A_2$$ are identical from the POV of
 $$T_3$$, they should choose $$A_1$$ and $$A_2$$ each with probability 1/2. Similarly, $$T_1$$ should
 choose $$A_1$$ and $$A_2$$ with the same probability, but with what probability is unknown so we
 denote it with $$x$$. For the probability that $$T_1$$ chooses $$A_3$$, that will be $$1 - 2x$$
 utilizing the fact that the row should sum up to 1. Finally, $$T_1$$ and $$T_2$$ should have the
 same strategies given they know the same answers, so $$T_2$$ should have the same probabilities.
-
-<div align="middle">
-  <img src="/assets/sheep/simplified_sheep_nash.png" align="middle" width="400px">
-</div>
 
 For the best value of $$x$$, it is the one that maximizes the expected value of the payoff for
 $$T_1$$ / $$T_2$$. The expected value of the payoff for $$T_1$$ is
