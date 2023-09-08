@@ -46,8 +46,8 @@ teams don't know an answer, how does the strategy change?
 
 Let's take a simplified scenario where there are only 3 teams and 3 answers. Additionally, let's
 simplify the point structure so that you get 1 point if you have the unique answer but 0 points
-otherwise. In this situation, teams 1 and 2 know all 3 answers, but team 3 only knows answers 1 and
-2. What is the Nash equilibrium of this game?
+otherwise. In this situation, teams 1 and 2 know all 3 answers, but team 3 only knows answers 1
+and 2. What is the Nash equilibrium of this game?
 
 <div align="middle">
   <img src="/assets/sheep/simplified_sheep_game.png" align="middle" width="400px">
