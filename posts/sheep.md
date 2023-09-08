@@ -7,7 +7,7 @@ title: Don't be a Sheep
 
 ## Game
 
-At my local bar trivia spot, there's a game called Don't be a Sheep, where a question such as
+At my local bar trivia spot, there's a game called Don't be a Sheep. For the game, a question such as
 
 > Name a US President that was formerly a Vice President
 
@@ -96,14 +96,13 @@ P(\text{$T_1$ has unique answer}) &= \sum_{i=1}^3 P(\text{$T_1$ guesses $A_i$ an
 $$
 
 $$3x - 5x^2$$ is a downwards-facing parabola, and its maximum can be found by setting the derivative
-to 0. $$3 - 10x = 0$$ leads to an answer of 0.3
+to 0. The answer is $$x = 0.3$$.
 
 ## Conclusion
 
-In the experiment above, the ideal strategy for was to select answers 1 and 2 30%
-of the time and answer 3 40% of the time. So applied to a larger game, the game theory optimal strategy
-is to do random, but with higher weight for obscure answers.
+In the version above, the ideal strategy was to select answers 1 and 2 30%
+of the time and answer 3 40% of the time. The uniform random strategy would be to select each answer 33.3% of the time, but the ideal strategy biases towards the obscure answer a bit. So what game theory tells us is that we should be random but bias towards obscure answers.
 
-In practice though, I still like
-uniformly at random, since you can be wrong about what's obscure and also teams will be in general
-be over-biased towards obscure answers.
+Despite this though, I still like
+uniformly at random. You can be wrong about what's obscure and also teams in general will be
+over-biased towards obscure answers. Going more uniformly random counteracts that.
