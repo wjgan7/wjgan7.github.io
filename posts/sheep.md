@@ -88,7 +88,7 @@ calculated as
 
 $$
 \begin{align*}
-P(\text{$T_1$ has unique answer}) &= P(\text{$T_1$ guesses $A_1$ and no on else guesses $A_1$}) + P(\text{$T_1$ guesses $A_2$ and no on else guesses $A_2$}) + P(\text{$T_1$ guesses $A_3$ and no on else guesses $A_3$})
+P(\text{$T_1$ has unique answer}) &= P(\text{$T_1$ guesses $A_1$ and no on else guesses $A_1$}) + P(\text{$T_1$ guesses $A_2$ and no on else guesses $A_2$}) + P(\text{$T_1$ guesses $A_3$ and no on else guesses $A_3$}) \\
 &= x(1-x)(1/2) + x(1-x)(1/2) + (1-2x)(2x) \\
 &= x(1-x) + (1-2x)(2x) \\
 &= x - x^2 + 2x - 4x^2 \\
