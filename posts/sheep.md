@@ -105,4 +105,4 @@ of the time and answer 3 40% of the time. The uniform random strategy would be t
 
 Despite this though, I still like
 uniformly at random. You can be wrong about what's obscure and also teams in general will be
-over-biased towards obscure answers. Going more uniformly random counteracts that.
+over-biased towards obscure answers. Going more uniformly random counteracts that. Trust the dice!
